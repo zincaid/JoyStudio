@@ -38,14 +38,44 @@ navigator.mediaDevices.getUserMedia(videoConstraints)
     .then(stream => {
         video.srcObject = stream;
         video.play();
-        startCaptureProcess();
     })
     .catch(err => console.error("Camera access denied", err));
 
-// Start auto capture process
-function startCaptureProcess() {
-    capturePhotoWithCountdown();
-}
+// Create manual capture button
+const manualCaptureBtn = document.createElement("button");
+manualCaptureBtn.textContent = "Capture Photo";
+manualCaptureBtn.style.position = "absolute";
+manualCaptureBtn.style.bottom = "70px"; // Adjust this value as needed
+manualCaptureBtn.style.left = "50%";
+manualCaptureBtn.style.transform = "translateX(-50%)";
+manualCaptureBtn.style.padding = "10px 20px";
+manualCaptureBtn.style.fontSize = "16px";
+document.body.appendChild(manualCaptureBtn);
+
+// Create next button (initially hidden)
+const nextBtn = document.createElement("button");
+nextBtn.textContent = "Next";
+nextBtn.style.position = "absolute";
+nextBtn.style.bottom = "70px"; // Adjust this value as needed
+nextBtn.style.left = "50%";
+nextBtn.style.transform = "translateX(-50%)";
+nextBtn.style.padding = "10px 20px";
+nextBtn.style.fontSize = "16px";
+nextBtn.style.display = "none"; // Hide initially
+document.body.appendChild(nextBtn);
+
+// Event listener for manual capture button
+manualCaptureBtn.addEventListener("click", () => {
+    if (capturedCount < 4) {
+        manualCaptureBtn.disabled = true; // Disable the button
+        capturePhotoWithCountdown();
+    }
+});
+
+// Event listener for next button
+nextBtn.addEventListener("click", () => {
+    redirectToDownload();
+});
 
 // Countdown and capture photo
 function capturePhotoWithCountdown() {
@@ -54,7 +84,7 @@ function capturePhotoWithCountdown() {
         return;
     }
 
-    let timeLeft = 5;
+    let timeLeft = 5;   
     countdownEl.textContent = timeLeft;
     counterEl.textContent = `${capturedCount}/4`;
     countdownSound.play();
@@ -91,8 +121,12 @@ function capturePhoto() {
     capturedCount++;
     counterEl.textContent = `${capturedCount}/4`;
 
-    // Continue to next photo
-    setTimeout(capturePhotoWithCountdown, 1000);
+    if (capturedCount >= 4) {
+        manualCaptureBtn.style.display = "none";
+        nextBtn.style.display = "block";
+    } else {
+        manualCaptureBtn.disabled = false; // Re-enable the button
+    }
 }
 
 // Shutter animation

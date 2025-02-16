@@ -52,10 +52,10 @@ function drawCollage() {
 
 // Function to draw the logo
 function drawLogo() {
-    ctx.fillStyle = "white"; // Set the text color
-    ctx.font = "bold 20px arial"; // Use a futuristic font similar to the original logo
-    ctx.textAlign = "center"; // Center align the text
-    ctx.textBaseline = "middle"; // Align text properly
+    ctx.fillStyle = "white"; 
+    ctx.font = "bold 20px arial"; 
+    ctx.textAlign = "center"; 
+    ctx.textBaseline = "middle"; 
     const logoX = canvasWidth / 2;
     const logoY = finalCanvas.height - logoSpace + 35;
     ctx.fillText("JOY.STUDIO", logoX, logoY);

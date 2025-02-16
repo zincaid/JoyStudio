@@ -3,7 +3,7 @@ const ctx = finalCanvas.getContext("2d");
 const downloadBtn = document.getElementById("download-btn");
 const colorButtons = document.querySelectorAll(".color-btn");
 
-let selectedFrameColor = "img/nude.png"; // Default frame
+let selectedFrameColor = "img/red.png"; // Default frame
 
 let capturedPhotos = JSON.parse(sessionStorage.getItem("capturedPhotos")) || [];
 
@@ -52,18 +52,13 @@ function drawCollage() {
 
 // Function to draw the logo
 function drawLogo() {
-    const logo = new Image();
-    logo.src = "img/logo.png";
-
-    logo.onload = () => {
-        const logoWidth = 80;
-        const logoHeight = 20;
-        const logoX = (canvasWidth - logoWidth) / 2;
-        const logoY = finalCanvas.height - logoSpace + 35;
-        ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
-    };
-
-    logo.onerror = () => console.error("Failed to load logo image.");
+    ctx.fillStyle = "white"; // Set the text color
+    ctx.font = "bold 20px arial"; // Use a futuristic font similar to the original logo
+    ctx.textAlign = "center"; // Center align the text
+    ctx.textBaseline = "middle"; // Align text properly
+    const logoX = canvasWidth / 2;
+    const logoY = finalCanvas.height - logoSpace + 35;
+    ctx.fillText("JOY.STUDIO", logoX, logoY);
 }
 
 // Change frame color and redraw instantly
